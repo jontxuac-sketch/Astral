@@ -7,7 +7,8 @@ Aplicación de estudio con cursos independientes, un plan de aprendizaje por asi
 ## Funciones
 
 - Cursos separados con fecha de examen y un idioma de respuesta propio: castellano, euskera o inglés. La selección se conserva en el curso y se valida también al sincronizarlo con la cuenta.
-- Plan de estudio de 10 pasos dentro de cada curso, seguido de herramientas extra para esa asignatura.
+- Plan de estudio por curso ajustado a la nota objetivo, con pasos marcables, intensidad semanal y progreso guardado.
+- Plan de 7 a 10 pasos dentro de cada curso, ajustado a la nota objetivo y seguido de herramientas extra para esa asignatura.
 - Hasta 50 fuentes por curso, incluyendo varios PDF, Word, PowerPoint, Excel, imágenes, vídeo, enlaces web y YouTube.
 - Inicio de sesión con Netlify Identity. Al entrar, los cursos locales se copian a la cuenta si todavía no hay cursos en la nube.
 - Cursos guardados en Netlify Blobs con una clave separada por usuario. Los archivos se suben en bloques y quedan asociados al curso y a la cuenta.
