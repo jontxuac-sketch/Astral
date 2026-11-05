@@ -16,10 +16,10 @@ window.astraIdentitySettingsPromise = identitySettingsPromise;
 window.astraLoginWithGoogle = async () => {
   const settings = await identitySettingsPromise;
   if (!settings) {
-    throw new Error("Google requiere Netlify Identity activo en un sitio publicado.");
+    throw new Error("El acceso con Google no está disponible ahora. Inténtalo de nuevo más tarde o usa tu correo electrónico.");
   }
   if (!settings.providers?.google) {
-    throw new Error("Activa Google en Netlify Identity > Registration > External providers.");
+    throw new Error("El acceso con Google todavía no está habilitado. Puedes crear tu cuenta con correo electrónico.");
   }
   return oauthLogin("google");
 };
