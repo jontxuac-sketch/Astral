@@ -30,8 +30,9 @@ La app se abre normalmente en `http://localhost:8888`. `netlify dev` conecta las
 
 1. Sube esta carpeta a un repositorio Git o vincúlala como proyecto en Netlify.
 2. Netlify usa `netlify.toml`: ejecuta `npm run build`, publica `dist` y registra las funciones de `netlify/functions`.
-3. En la configuración del proyecto, activa **Identity** y permite el registro de usuarios. Si quieres acceso con Google, habilita también Google como proveedor externo.
-4. Publica el sitio con HTTPS. Netlify crea y conserva los almacenes Blobs compartidos entre despliegues; los datos se guardan en la región de Frankfurt (`eu-central-1`).
+3. En la configuración del proyecto, activa **Identity** y permite el registro de usuarios.
+4. En **Identity → Registration → External providers**, añade y activa **Google**. La app consulta la configuración de Identity y muestra el botón cuando Google está disponible; no guardes credenciales de Google en este repositorio.
+5. Publica el sitio con HTTPS. Netlify crea y conserva los almacenes Blobs compartidos entre despliegues; los datos se guardan en la región de Frankfurt (`eu-central-1`).
 
 ## Almacenamiento por cuenta
 

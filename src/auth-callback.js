@@ -1,6 +1,28 @@
-import { handleAuthCallback, oauthLogin } from "@netlify/identity";
+import { getSettings, handleAuthCallback, oauthLogin } from "@netlify/identity";
 
-window.astraLoginWithGoogle = () => oauthLogin("google");
+const identitySettingsPromise = getSettings()
+  .then((settings) => {
+    window.astraIdentitySettings = settings;
+    window.dispatchEvent(new CustomEvent("astra:identity-settings", { detail: settings }));
+    return settings;
+  })
+  .catch(() => {
+    window.astraIdentitySettings = null;
+    window.dispatchEvent(new CustomEvent("astra:identity-settings", { detail: null }));
+    return null;
+  });
+
+window.astraIdentitySettingsPromise = identitySettingsPromise;
+window.astraLoginWithGoogle = async () => {
+  const settings = await identitySettingsPromise;
+  if (!settings) {
+    throw new Error("Google requiere Netlify Identity activo en un sitio publicado.");
+  }
+  if (!settings.providers?.google) {
+    throw new Error("Activa Google en Netlify Identity > Registration > External providers.");
+  }
+  return oauthLogin("google");
+};
 
 try {
   const result = await handleAuthCallback();
