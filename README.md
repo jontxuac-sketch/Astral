@@ -42,4 +42,4 @@ Las asignaturas se guardan en la tabla `account_study_data`, separadas por el ID
 
 ## Alcance actual
 
-Las funciones de estudio tienen contenido de muestra. Para producir respuestas basadas en el contenido de los documentos hace falta conectar un modelo de IA. El idioma elegido se guarda por curso y se aplica al contenido de muestra, los mensajes de las actividades y las preguntas del PDF. La interfaz general de navegación está en castellano.
+La creación de cursos usa Astra (`gpt-6-astra`) mediante Netlify AI Gateway y requiere iniciar sesión. Genera un plan personalizado de 7 a 10 pasos según asignatura, idioma, fecha y nota objetivo; los materiales son opcionales y se usan sus títulos, sin analizar los archivos. El plan se guarda junto al curso en Netlify Database. Las demás funciones de estudio tienen contenido de muestra. Para producir respuestas basadas en el contenido de los documentos hace falta conectar un modelo de IA. El idioma elegido se guarda por curso y se aplica al contenido de muestra, los mensajes de las actividades y las preguntas del PDF. La interfaz general de navegación está en castellano.
