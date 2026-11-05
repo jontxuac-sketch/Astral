@@ -11,14 +11,15 @@ Aplicación de estudio con cursos independientes, un plan de aprendizaje por asi
 - Plan de 7 a 10 pasos dentro de cada curso, ajustado a la nota objetivo y seguido de herramientas extra para esa asignatura.
 - Hasta 50 fuentes por curso, incluyendo varios PDF, Word, PowerPoint, Excel, imágenes, vídeo, enlaces web y YouTube.
 - Inicio de sesión con Netlify Identity. Al entrar, los cursos locales se copian a la cuenta si todavía no hay cursos en la nube.
-- Cursos guardados en Netlify Blobs con una clave separada por usuario. Los archivos se suben en bloques y quedan asociados al curso y a la cuenta.
+- Cursos guardados en Netlify Database (Postgres), con un registro separado por cuenta. Al iniciar sesión se importan automáticamente los cursos que ya estaban en Blobs.
+- Archivos de los cursos guardados en Netlify Blobs, con rutas separadas por cuenta, curso y material.
 - Sesión con cookies gestionadas en funciones de Netlify; las funciones verifican la identidad antes de leer o guardar datos.
 - Actividades, consignas, respuestas de muestra, avisos y controles de aprendizaje traducidos al idioma elegido para cada curso.
 - Simulacro escrito en PDF con dificultad y tiempo configurables. Las preguntas y etiquetas del PDF respetan el idioma del curso.
 
 ## Ejecutar localmente
 
-Requiere Node.js 18 o posterior. Instala las dependencias y arranca el entorno de Netlify:
+Requiere Node.js 22.12 o posterior. Instala las dependencias y arranca el entorno de Netlify:
 
 ```sh
 npm install
@@ -33,11 +34,11 @@ La app se abre normalmente en `http://localhost:8888`. `netlify dev` conecta las
 2. Netlify usa `netlify.toml`: ejecuta `npm run build`, publica `dist` y registra las funciones de `netlify/functions`.
 3. En la configuración del proyecto, activa **Identity** y permite el registro de usuarios.
 4. En **Identity → Registration → External providers**, añade y activa **Google**. La app consulta la configuración de Identity y muestra el botón cuando Google está disponible; no guardes credenciales de Google en este repositorio.
-5. Publica el sitio con HTTPS. Netlify crea y conserva los almacenes Blobs compartidos entre despliegues; los datos se guardan en la región de Frankfurt (`eu-central-1`).
+5. Publica el sitio con HTTPS. Netlify provisiona Postgres y aplica la migración incluida al desplegar. Netlify Database requiere un plan compatible con créditos.
 
 ## Almacenamiento por cuenta
 
-Las asignaturas se guardan como un registro de datos por ID de cuenta en el almacén `astra-study-data`. Los archivos usan el almacén `astra-study-files`; sus rutas incluyen el ID de cuenta, curso y material. El navegador no recibe acceso directo a esos almacenes: las funciones autentican cada solicitud y construyen las claves usando la identidad verificada por Netlify.
+Las asignaturas se guardan en la tabla `account_study_data`, separadas por el ID de cuenta y leídas/escritas solo desde funciones autenticadas de Netlify. La función importa los cursos existentes del almacén anterior `astra-study-data` al primer acceso y mantiene una copia de compatibilidad. Los archivos usan el almacén `astra-study-files`, en la región de Frankfurt (`eu-central-1`), con rutas que incluyen el ID de cuenta, curso y material.
 
 ## Alcance actual
 
